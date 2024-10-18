@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html class="scroll-smooth transition-all duration-300">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <title>Undangan Pernikahan</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet" />
+    <style>
+      @keyframes float {
+        0% {
+          transform: translateY(0px);
+        }
+        50% {
+          transform: translateY(-10px);
+        }
+        100% {
+          transform: translateY(0px);
+        }
+      }
+
+      #toTopBtn.floating {
+        animation: float 1s ease-in-out;
+      }
+
+      #mempelaiPria,
+      #mempelaiWanita {
+        transition: transform 0.3s ease-out;
+      }
+      #mempelaiBergandengan {
+        position: sticky;
+        top: 100px; /* Sesuaikan dengan kebutuhan */
+        z-index: 10;
+      }
+
+      /* Desain scrollbar kustom */
+      ::-webkit-scrollbar {
+        width: 12px;
+      }
+
+      ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb {
+        background-color: #888;
+        border-radius: 6px;
+        border: 3px solid #f1f1f1;
+      }
+
+      ::-webkit-scrollbar-thumb:hover {
+        background-color: #555;
+      }
+
+      /* Untuk Firefox */
+      * {
+        scrollbar-width: thin;
+        scrollbar-color: #888 #f1f1f1;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Hero Section -->
+    <div class="relative h-screen bg-cover bg-center" style="background-image: url('./img/Rakha&Azka.png')" id="hero">
+      <!-- Layer blur dan grayscale dengan Tailwind -->
+      <div class="absolute inset-0 backdrop-blur-lg grayscale"></div>
+
+      <!-- Text Centered -->
+      <div class="relative flex items-center justify-center h-full text-center">
+        <div class="text-content">
+          <p class="text-wedding text-base md:text-xl font-satisfy">Happy Wedding</p>
+          <h1 class="text-wedding text-4xl md:text-5xl lg:text-6xl font-bold mt-2 mb-6 font-satisfy">Rakha & Azka</h1>
+          <div id="countdown" class="font-satisfy text-wedding">
+            <ul class="flex justify-center space-x-8">
+              <li class="text-xl md:text-2xl uppercase"><span id="days" class="block text-5xl md:text-7xl">0</span>days</li>
+              <li class="text-xl md:text-2xl uppercase"><span id="hours" class="block text-5xl md:text-7xl">0</span>hours</li>
+              <li class="text-xl md:text-2xl uppercase"><span id="minutes" class="block text-5xl md:text-7xl">0</span>minutes</li>
+              <li class="text-xl md:text-2xl uppercase"><span id="seconds" class="block text-5xl md:text-7xl">0</span>seconds</li>
+            </ul>
+          </div>
+          <button class="mt-8 px-6 py-3 bg-wedding text-white font-satisfy text-xl rounded-full hover:bg-opacity-80 transition duration-300"><a href="#nav">Periksa Undangan</a></button>
+        </div>
+      </div>
+    </div>
+    <!-- akhir Hero Section -->
+
+    <!-- navbar -->
+    <nav class="bg-wedding text-white py-4 sticky top-0 z-50" id="nav">
+      <div class="container mx-auto flex justify-between items-center px-4">
+        <div class="text-3xl font-satisfy"><a href="#hero">RakhAzka</a></div>
+        <!-- Hamburger menu untuk tampilan mobile -->
+        <button id="hamburger" class="md:hidden">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+          </svg>
+        </button>
+        <!-- Menu untuk desktop -->
+        <ul class="hidden md:flex space-x-6 font-poppins">
+          <li><a href="#beranda" class="hover:text-gray-300 transition duration-300">Beranda</a></li>
+          <li><a href="#acara" class="hover:text-gray-300 transition duration-300">Acara</a></li>
+          <li><a href="#rsvp" class="hover:text-gray-300 transition duration-300">RSVP</a></li>
+          <li><a href="#galeri" class="hover:text-gray-300 transition duration-300">Galeri Foto</a></li>
+          <li><a href="#lokasi" class="hover:text-gray-300 transition duration-300">Lokasi Pernikahan</a></li>
+        </ul>
+      </div>
+    </nav>
+
+    <!-- Sidebar untuk tampilan mobile -->
+    <div id="sidebar" class="fixed top-0 right-0 h-full w-64 bg-wedding text-white transform translate-x-full transition-transform duration-300 ease-in-out z-50">
+      <div class="p-5">
+        <button id="close-sidebar" class="mb-5">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+          </svg>
+        </button>
+        <ul class="space-y-4 font-poppins">
+          <li><a href="#beranda" class="block hover:text-gray-300 transition duration-300">Beranda</a></li>
+          <li><a href="#acara" class="block hover:text-gray-300 transition duration-300">Acara</a></li>
+          <li><a href="#rsvp" class="block hover:text-gray-300 transition duration-300">RSVP</a></li>
+          <li><a href="#" class="block hover:text-gray-300 transition duration-300">Galeri Foto</a></li>
+          <li><a href="#" class="block hover:text-gray-300 transition duration-300">Lokasi Pernikahan</a></li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Bagian Beranda -->
+    <section class="py-20 bg-dark" id="beranda">
+      <div class="container mx-auto px-4">
+        <!-- Bagian Kiri -->
+        <div class="flex flex-col md:flex-row items-center mb-16">
+          <div class="w-full md:w-1/2 mb-8 md:mb-0">
+            <img src="./img/Rakha.jpg" alt="Mempelai Pria" class="rounded-full w-64 h-64 mx-auto object-cover shadow-lg" />
+          </div>
+          <div class="w-full md:w-1/2 text-center md:text-left md:pl-8">
+            <h2 class="text-4xl font-satisfy text-white mb-4">Muh. Rakha Widya Ardhana</h2>
+            <p class="font-poppins text-gray-300">Putra dari Bapak dan Ibu ......, lahir di ..... pada tanggal ..... . Seorang insinyur perangkat lunak yang bersemangat dan penuh kasih.</p>
+          </div>
+        </div>
+
+        <!-- Bagian Kanan -->
+        <div class="flex flex-col md:flex-row-reverse items-center">
+          <div class="w-full md:w-1/2 mb-8 md:mb-0">
+            <img src="./img/Azka.jpg" alt="Mempelai Wanita" class="rounded-full w-64 h-64 mx-auto object-cover shadow-lg" />
+          </div>
+          <div class="w-full md:w-1/2 text-center md:text-right md:pr-8">
+            <h2 class="text-4xl font-satisfy text-white mb-4">Danish Naisyila Azka</h2>
+            <p class="font-poppins text-gray-300">Putri dari Bapak dan Ibu ...., lahir di ...... pada tanggal ...... . Seorang desainer grafis kreatif dengan hati yang lembut dan penuh perhatian.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Bagian Acara -->
+    <section class="py-20 bg-krem" id="acara">
+      <div class="container mx-auto px-4">
+        <h2 class="text-5xl font-satisfy text-wedding text-center mb-12">Acara Pernikahan Kami</h2>
+
+        <!-- Tambahkan div untuk gambar mempelai yang bergandengan -->
+        <div id="mempelaiBergandengan" class="flex justify-center items-center mb-8 opacity-0 transition-opacity duration-300">
+          <img src="./img/Rakha.jpg" alt="Mempelai Pria" class="rounded-full w-32 h-32 object-cover shadow-lg" />
+          <svg xmlns="http://www.w3.org/2000/svg" class="h-12 w-12 mx-4 text-red-500" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd" />
+          </svg>
+          <img src="./img/Azka.jpg" alt="Mempelai Wanita" class="rounded-full w-32 h-32 object-cover shadow-lg" />
+        </div>
+
+        <div class="flex flex-col md:flex-row justify-center items-center space-y-8 md:space-y-0 md:space-x-12">
+          <div class="w-full md:w-1/2 text-center">
+            <h3 class="text-3xl font-satisfy text-wedding mb-4">Akad Nikah</h3>
+            <p class="font-poppins text-dark mb-2">Sabtu, 16 Oktober 2025</p>
+            <p class="font-poppins text-dark mb-2">08:00 - 10:00 WIB</p>
+            <p class="font-poppins text-dark mb-4">Masjid Agung Baitul Mukminin Jombang, Indonesia</p>
+            <p class="font-poppins text-dark italic">"Dengan nama Allah Yang Maha Pengasih lagi Maha Penyayang, kami mengikat janji suci kami."</p>
+          </div>
+
+          <div class="w-full md:w-1/2 text-center">
+            <h3 class="text-3xl font-satisfy text-wedding mb-4">Resepsi</h3>
+            <p class="font-poppins text-dark mb-2">Sabtu, 16 Oktober 2025</p>
+            <p class="font-poppins text-dark mb-2">11:00 - 14:00 WIB</p>
+            <p class="font-poppins text-dark mb-4">Green Red Hotel Syariah, Jombang</p>
+            <p class="font-poppins text-dark italic">"Mari rayakan cinta kami bersama keluarga dan sahabat tercinta."</p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- akhir acara -->
+
+    <!-- Bagian RSVP -->
+    <section class="py-20 bg-white" id="rsvp">
+      <div class="container mx-auto px-4">
+        <h2 class="text-5xl font-satisfy text-wedding text-center mb-12">RSVP</h2>
+        <div class="max-w-md mx-auto">
+          <form class="space-y-6">
+            <div>
+              <label for="nama" class="block text-sm font-poppins text-gray-700 mb-2">Nama</label>
+              <input type="text" id="nama" name="nama" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-wedding focus:border-wedding" />
+            </div>
+            <div>
+              <label for="kehadiran" class="block text-sm font-poppins text-gray-700 mb-2">Konfirmasi Kehadiran</label>
+              <select id="kehadiran" name="kehadiran" required class="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-wedding focus:border-wedding">
+                <option value="">Pilih status kehadiran</option>
+                <option value="hadir">Hadir</option>
+                <option value="tidak_hadir">Tidak Hadir</option>
+                <option value="pending">Pending</option>
+              </select>
+            </div>
+            <div>
+              <button type="submit" class="w-full px-4 py-2 bg-wedding text-white font-poppins rounded-md hover:bg-wedding-dark focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-wedding">Kirim</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+    <!-- akhir RSVP -->
+
+    <!-- Bagian Galeri Foto -->
+    <section class="py-20 bg-dark" id="galeri">
+      <div class="container mx-auto px-4">
+        <h2 class="text-5xl font-bold font-satisfy text-wedding text-center mb-12">Galeri Foto</h2>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          <!-- Ulangi struktur ini untuk setiap gambar -->
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0040.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0042.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0044.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0046.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0048.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0050.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0052.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0054.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240926-WA0056.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240928-WA0001.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240928-WA0012.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20240928-WA0016.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <div class="w-full aspect-square overflow-hidden rounded-md">
+            <img src="./img/IMG-20241013-WA0045.jpg" alt="Foto Pernikahan 1" class="w-full h-full object-cover" />
+          </div>
+          <!-- ... (ulangi untuk gambar lainnya) ... -->
+        </div>
+      </div>
+    </section>
+    <!-- Akhir Galeri Foto -->
+
+    <!-- Bagian Lokasi -->
+    <section class="py-20 bg-light" id="lokasi">
+      <div class="container mx-auto px-4">
+        <h2 class="text-5xl font-bold font-satisfy text-wedding text-center mb-12">Lokasi</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <!-- Peta Akad -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-3xl font-satisfy text-wedding mb-4 text-center">Akad Nikah</h3>
+            <div class="aspect-w-16 aspect-h-9 mb-4">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.16688908744!2d112.2322274!3d-7.5567747999999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e7840220123f1ad%3A0x937bb9770f73e064!2sMasjid%20Agung%20Baitul%20Mukminin%20Kabupaten%20Jombang!5e0!3m2!1sid!2sid!4v1729175436589!5m2!1sid!2sid"
+                class="w-full h-full"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <p class="text-gray-700 text-center">
+              Masjid Agung Baitul Mukminin<br />
+              Jl. KH. Wahid Hasyim No.52, Kepanjen,<br />
+              Kec. Jombang, Kabupaten Jombang,<br />
+              Jawa Timur 61419
+            </p>
+          </div>
+
+          <!-- Peta Resepsi -->
+          <div class="bg-white rounded-lg shadow-lg p-6">
+            <h3 class="text-3xl font-satisfy text-wedding mb-4 text-center">Resepsi</h3>
+            <div class="aspect-w-16 aspect-h-9 mb-4">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3955.3439275063406!2d112.25490667411637!3d-7.537417874398816!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2e786ab48a10e63f%3A0x14e6aa14ab4bff1b!2sGreen%20Red%20Hotel%20Syariah%20Jombang!5e0!3m2!1sid!2sid!4v1729175534816!5m2!1sid!2sid"
+                class="w-full h-full"
+                style="border: 0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <p class="text-gray-700 text-center">
+              Green Red Hotel Syariah Jombang<br />
+              Jl. KH. Wahid Hasyim No.137, Kepanjen,<br />
+              Kec. Jombang, Kabupaten Jombang,<br />
+              Jawa Timur 61419
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Akhir Bagian Lokasi -->
+
+    <!-- Bagian Footer -->
+    <footer class="bg-wedding text-white py-8">
+      <div class="container mx-auto px-4">
+        <div class="flex flex-wrap justify-between items-center">
+          <div class="w-full md:w-1/3 mb-4 md:mb-0">
+            <h3 class="text-2xl font-satisfy mb-2">Pernikahan Kami</h3>
+            <p>Terima kasih telah menjadi bagian dari momen bahagia kami.</p>
+          </div>
+          <div class="w-full md:w-1/3 mb-4 md:mb-0">
+            <h4 class="text-xl font-semibold mb-2">Navigasi</h4>
+            <nav>
+              <ul class="space-y-2">
+                <li><a href="#home" class="hover:text-gray-300">Beranda</a></li>
+                <li><a href="#couple" class="hover:text-gray-300">Mempelai</a></li>
+                <li><a href="#event" class="hover:text-gray-300">Acara</a></li>
+                <li><a href="#gallery" class="hover:text-gray-300">Galeri</a></li>
+                <li><a href="#location" class="hover:text-gray-300">Lokasi</a></li>
+              </ul>
+            </nav>
+          </div>
+          <div class="w-full md:w-1/3">
+            <h4 class="text-xl font-semibold mb-2">Hubungi Kami</h4>
+            <p>Email: info@pernikahankami.com</p>
+            <p>Telepon: +62 123 456 7890</p>
+          </div>
+        </div>
+        <div class="mt-8 text-center">
+          <p>&copy; 2023 Pernikahan Kami. Hak Cipta Dilindungi.</p>
+        </div>
+      </div>
+    </footer>
+  </body>
+  <script src="script.js"></script>
+
+  <!-- Tambahkan elemen audio -->
+  <audio id="backgroundMusic" loop>
+    <source src="./music/bgm_pernikahan.mp3" type="audio/mpeg" />
+    Browser Anda tidak mendukung elemen audio.
+  </audio>
+
+  <!-- Tambahkan tombol kontrol musik -->
+  <button id="musicControl" class="fixed bottom-4 left-4 bg-wedding text-white rounded-full p-3 shadow-lg z-50">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 9v6m4-6v6m7-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  </button>
+
+  <!-- Tambahkan ini di akhir file, sebelum tag </body> -->
+  <button id="toTopBtn" class="fixed bottom-5 right-5 bg-wedding text-white p-3 rounded-full shadow-lg opacity-0 transition-all duration-300 ease-in-out">
+    <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 11l3-3m0 0l3 3m-3-3v8m0-13a9 9 0 110 18 9 9 0 010-18z" />
+    </svg>
+  </button>
+</html>

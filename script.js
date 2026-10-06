@@ -5,7 +5,7 @@
     day = hour * 24;
 
   // Tanggal pernikahan yang dapat diubah dengan mudah
-  const weddingDate = "2025-10-16"; // Format: YYYY-MM-DD
+  const weddingDate = "2026-10-16"; // Format: YYYY-MM-DD
 
   const countDown = new Date(weddingDate).getTime(),
     x = setInterval(function () {
